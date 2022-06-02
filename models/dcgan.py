@@ -232,8 +232,8 @@ class DCGAN_MODEL(object):
                         'g_loss': g_loss.data
                     }
 
-                    for tag, value in info.items():
-                        self.logger.scalar_summary(tag, value, generator_iter)
+                    # for tag, value in info.items():
+                    #     self.logger.scalar_summary(tag, value.cpu(), generator_iter)
 
                     # Log values and gradients of the parameters
                     for tag, value in self.D.named_parameters():
