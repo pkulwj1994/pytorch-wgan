@@ -227,28 +227,28 @@ class DCGAN_MODEL(object):
 
                     # TensorBoard logging
                     # Log the scalar values
-                    info = {
-                        'd_loss': d_loss.data,
-                        'g_loss': g_loss.data
-                    }
+                    # info = {
+                    #     'd_loss': d_loss.data,
+                    #     'g_loss': g_loss.data
+                    # }
 
                     # for tag, value in info.items():
                     #     self.logger.scalar_summary(tag, value.cpu(), generator_iter)
 
                     # Log values and gradients of the parameters
-                    for tag, value in self.D.named_parameters():
-                        tag = tag.replace('.', '/')
-                        self.logger.histo_summary(tag, self.to_np(value), generator_iter)
-                        self.logger.histo_summary(tag + '/grad', self.to_np(value.grad), generator_iter)
+                    # for tag, value in self.D.named_parameters():
+                    #     tag = tag.replace('.', '/')
+                    #     self.logger.histo_summary(tag, self.to_np(value), generator_iter)
+                    #     self.logger.histo_summary(tag + '/grad', self.to_np(value.grad), generator_iter)
 
-                    # Log the images while training
-                    info = {
-                        'real_images': self.real_images(images, self.number_of_images),
-                        'generated_images': self.generate_img(z, self.number_of_images)
-                    }
+                    # # Log the images while training
+                    # info = {
+                    #     'real_images': self.real_images(images, self.number_of_images),
+                    #     'generated_images': self.generate_img(z, self.number_of_images)
+                    # }
 
-                    for tag, images in info.items():
-                        self.logger.image_summary(tag, images, generator_iter)
+                    # for tag, images in info.items():
+                    #     self.logger.image_summary(tag, images, generator_iter)
 
 
         self.t_end = t.time()
