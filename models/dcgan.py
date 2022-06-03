@@ -131,6 +131,8 @@ class DCGAN_MODEL(object):
                 real_labels = torch.ones(self.batch_size)
                 fake_labels = torch.zeros(self.batch_size)
 
+#                 images = images + 0.3*torch.randn_like(images)
+
                 if self.cuda:
                     images, z = Variable(images).cuda(self.cuda_index), Variable(z).cuda(self.cuda_index)
                     real_labels, fake_labels = Variable(real_labels).cuda(self.cuda_index), Variable(fake_labels).cuda(self.cuda_index)
@@ -208,6 +210,9 @@ class DCGAN_MODEL(object):
                     samples = samples.data.cpu()[:64]
                     grid = utils.make_grid(samples)
                     utils.save_image(grid, 'training_result_images/img_generatori_iter_{}.png'.format(str(generator_iter).zfill(3)))
+
+                    grid = utils.make_grid(images.cpu()[:64])
+                    utils.save_image(grid, 'training_result_images/real_img.png')
 
                     time = t.time() - self.t_begin
                     #print("Inception score: {}".format(inception_score))
@@ -327,4 +332,3 @@ class DCGAN_MODEL(object):
 
         grid = utils.make_grid(images, nrow=number_int )
         utils.save_image(grid, 'interpolated_images/interpolated_{}.png'.format(str(number).zfill(3)))
-        print("Saved interpolated images to interpolated_images/interpolated_{}.".format(str(number).zfill(3)))
