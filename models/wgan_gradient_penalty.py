@@ -234,10 +234,14 @@ class WGAN_GP(object):
                 # Denormalize images and save them in grid 8x8
                 z = self.get_torch_variable(torch.randn(800, 100, 1, 1))
                 samples = self.G(z)
-                samples = samples.mul(0.5).add(0.5)
+                # samples = samples.mul(0.5).add(0.5)
                 samples = samples.data.cpu()[:64]
                 grid = utils.make_grid(samples)
                 utils.save_image(grid, 'training_result_images/img_generatori_iter_{}.png'.format(str(g_iter).zfill(3)))
+
+                images = images.data.cpu()[:64]
+                grid = utils.make_grid(images)
+                utils.save_image(grid, 'training_result_images/real_images.png')
 
                 # Testing
                 time = t.time() - self.t_begin
@@ -252,26 +256,26 @@ class WGAN_GP(object):
 
                 # ============ TensorBoard logging ============#
                 # (1) Log the scalar values
-                info = {
-                    'Wasserstein distance': Wasserstein_D.data,
-                    'Loss D': d_loss.data,
-                    'Loss G': g_cost.data,
-                    'Loss D Real': d_loss_real.data,
-                    'Loss D Fake': d_loss_fake.data
+                # info = {
+                #     'Wasserstein distance': Wasserstein_D.data,
+                #     'Loss D': d_loss.data,
+                #     'Loss G': g_cost.data,
+                #     'Loss D Real': d_loss_real.data,
+                #     'Loss D Fake': d_loss_fake.data
 
-                }
+                # }
 
-                for tag, value in info.items():
-                    self.logger.scalar_summary(tag, value.cpu(), g_iter + 1)
+                # for tag, value in info.items():
+                #     self.logger.scalar_summary(tag, value.cpu(), g_iter + 1)
 
-                # (3) Log the images
-                info = {
-                    'real_images': self.real_images(images, self.number_of_images),
-                    'generated_images': self.generate_img(z, self.number_of_images)
-                }
+                # # (3) Log the images
+                # info = {
+                #     'real_images': self.real_images(images, self.number_of_images),
+                #     'generated_images': self.generate_img(z, self.number_of_images)
+                # }
 
-                for tag, images in info.items():
-                    self.logger.image_summary(tag, images, g_iter + 1)
+                # for tag, images in info.items():
+                #     self.logger.image_summary(tag, images, g_iter + 1)
 
 
 
