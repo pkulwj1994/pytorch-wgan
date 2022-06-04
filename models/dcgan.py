@@ -127,6 +127,8 @@ class DCGAN_MODEL(object):
                 if i == train_loader.dataset.__len__() // self.batch_size:
                     break
 
+                images = images + 0.5*torch.randn_like(images)
+
                 z = torch.rand((self.batch_size, 100, 1, 1))
                 real_labels = torch.ones(self.batch_size)
                 fake_labels = torch.zeros(self.batch_size)
@@ -206,7 +208,7 @@ class DCGAN_MODEL(object):
                     # Denormalize images and save them in grid 8x8
                     z = Variable(torch.randn(800, 100, 1, 1)).cuda(self.cuda_index)
                     samples = self.G(z)
-                    samples = samples.mul(0.5).add(0.5)
+                    # samples = samples.mul(0.5).add(0.5)
                     samples = samples.data.cpu()[:64]
                     grid = utils.make_grid(samples)
                     utils.save_image(grid, 'training_result_images/img_generatori_iter_{}.png'.format(str(generator_iter).zfill(3)))
