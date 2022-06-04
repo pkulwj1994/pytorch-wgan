@@ -98,10 +98,10 @@ class WGAN_GP(object):
         self.check_cuda(args.cuda)
 
         # WGAN values from paper
-        self.learning_rate = 1e-4
+        self.learning_rate = 1e-3
         self.b1 = 0.5
         self.b2 = 0.999
-        self.batch_size = 64
+        self.batch_size = 256
 
         # WGAN_gradient penalty uses ADAM
         self.d_optimizer = optim.Adam(self.D.parameters(), lr=self.learning_rate, betas=(self.b1, self.b2))
